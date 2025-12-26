@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Nhóm Hotel Receptionist - Lễ tân -->
         <record id="group_hotel_receptionist" model="res.groups">
             <field name="name">Hotel Receptionist</field>
             <field name="category_id" ref="base.module_category_services"/>
         </record>
 
-        <!-- Nhóm Hotel Manager - Quản lý -->
         <record id="group_hotel_manager" model="res.groups">
             <field name="name">Hotel Manager</field>
             <field name="category_id" ref="base.module_category_services"/>

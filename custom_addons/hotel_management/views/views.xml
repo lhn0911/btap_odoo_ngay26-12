@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
-        <!-- ============================================ -->
-        <!-- HOTEL BOOKING VIEWS -->
-        <!-- ============================================ -->
-        
-        <!-- Booking Tree View -->
+
         <record model="ir.ui.view" id="hotel_booking_tree_view">
             <field name="name">hotel.booking.tree</field>
             <field name="model">hotel.booking</field>
@@ -22,7 +18,6 @@
             </field>
         </record>
 
-        <!-- Booking Form View -->
         <record model="ir.ui.view" id="hotel_booking_form_view">
             <field name="name">hotel.booking.form</field>
             <field name="model">hotel.booking</field>
@@ -43,7 +38,7 @@
                                 <field name="check_out"/>
                             </group>
                         </group>
-                        
+
                         <group>
                             <group>
                                 <field name="duration" readonly="1"/>
@@ -52,7 +47,7 @@
                                 <field name="total_amount" readonly="1" class="oe_read_only" style="font-weight: bold; font-size: 16px;"/>
                             </group>
                         </group>
-                        
+
                         <notebook>
                             <page string="Dịch vụ thêm" name="services">
                                 <field name="service_ids" widget="many2many_tags"/>
@@ -63,7 +58,6 @@
             </field>
         </record>
 
-        <!-- Booking Search View -->
         <record model="ir.ui.view" id="hotel_booking_search_view">
             <field name="name">hotel.booking.search</field>
             <field name="model">hotel.booking</field>
@@ -84,7 +78,6 @@
             </field>
         </record>
 
-        <!-- Booking Action -->
         <record model="ir.actions.act_window" id="hotel_booking_action">
             <field name="name">Đặt phòng</field>
             <field name="res_model">hotel.booking</field>
@@ -100,11 +93,7 @@
             </field>
         </record>
 
-        <!-- ============================================ -->
-        <!-- HOTEL CUSTOMER VIEWS -->
-        <!-- ============================================ -->
-        
-        <!-- Customer Tree View -->
+
         <record model="ir.ui.view" id="hotel_customer_tree_view">
             <field name="name">hotel.customer.tree</field>
             <field name="model">hotel.customer</field>
@@ -117,7 +106,6 @@
             </field>
         </record>
 
-        <!-- Customer Form View -->
         <record model="ir.ui.view" id="hotel_customer_form_view">
             <field name="name">hotel.customer.form</field>
             <field name="model">hotel.customer</field>
@@ -125,13 +113,15 @@
                 <form string="Khách hàng">
                     <sheet>
                         <div class="oe_title">
-                            <h1><field name="name" placeholder="Nhập tên khách hàng..."/></h1>
+                            <h1>
+                                <field name="name" placeholder="Nhập tên khách hàng..."/>
+                            </h1>
                         </div>
                         <group string="Thông tin">
                             <field name="identity_card" placeholder="Nhập số CMND/CCCD..."/>
                             <field name="phone" placeholder="Nhập số điện thoại..."/>
                         </group>
-                        
+
                         <notebook>
                             <page string="Lịch sử đặt phòng" name="bookings">
                                 <field name="booking_ids" readonly="1">
@@ -151,7 +141,6 @@
             </field>
         </record>
 
-        <!-- Customer Search View -->
         <record model="ir.ui.view" id="hotel_customer_search_view">
             <field name="name">hotel.customer.search</field>
             <field name="model">hotel.customer</field>
@@ -164,7 +153,6 @@
             </field>
         </record>
 
-        <!-- Customer Action -->
         <record model="ir.actions.act_window" id="hotel_customer_action">
             <field name="name">Khách hàng</field>
             <field name="res_model">hotel.customer</field>
@@ -180,11 +168,6 @@
             </field>
         </record>
 
-        <!-- ============================================ -->
-        <!-- HOTEL ROOM VIEWS -->
-        <!-- ============================================ -->
-        
-        <!-- Room Tree View -->
         <record model="ir.ui.view" id="hotel_room_tree_view">
             <field name="name">hotel.room.tree</field>
             <field name="model">hotel.room</field>
@@ -199,7 +182,6 @@
             </field>
         </record>
 
-        <!-- Room Form View -->
         <record model="ir.ui.view" id="hotel_room_form_view">
             <field name="name">hotel.room.form</field>
             <field name="model">hotel.room</field>
@@ -222,7 +204,6 @@
             </field>
         </record>
 
-        <!-- Room Search View -->
         <record model="ir.ui.view" id="hotel_room_search_view">
             <field name="name">hotel.room.search</field>
             <field name="model">hotel.room</field>
@@ -237,7 +218,6 @@
             </field>
         </record>
 
-        <!-- Room Action -->
         <record model="ir.actions.act_window" id="hotel_room_action">
             <field name="name">Danh sách Phòng</field>
             <field name="res_model">hotel.room</field>
@@ -253,11 +233,7 @@
             </field>
         </record>
 
-        <!-- ============================================ -->
-        <!-- HOTEL ROOM TYPE VIEWS -->
-        <!-- ============================================ -->
-        
-        <!-- Room Type Tree View -->
+
         <record model="ir.ui.view" id="hotel_room_type_tree_view">
             <field name="name">hotel.room.type.tree</field>
             <field name="model">hotel.room.type</field>
@@ -269,7 +245,6 @@
             </field>
         </record>
 
-        <!-- Room Type Form View -->
         <record model="ir.ui.view" id="hotel_room_type_form_view">
             <field name="name">hotel.room.type.form</field>
             <field name="model">hotel.room.type</field>
@@ -285,7 +260,6 @@
             </field>
         </record>
 
-        <!-- Room Type Action -->
         <record model="ir.actions.act_window" id="hotel_room_type_action">
             <field name="name">Loại phòng</field>
             <field name="res_model">hotel.room.type</field>
@@ -300,11 +274,7 @@
             </field>
         </record>
 
-        <!-- ============================================ -->
-        <!-- HOTEL SERVICE VIEWS -->
-        <!-- ============================================ -->
-        
-        <!-- Service Tree View -->
+
         <record model="ir.ui.view" id="hotel_service_tree_view">
             <field name="name">hotel.service.tree</field>
             <field name="model">hotel.service</field>
@@ -316,7 +286,6 @@
             </field>
         </record>
 
-        <!-- Service Form View -->
         <record model="ir.ui.view" id="hotel_service_form_view">
             <field name="name">hotel.service.form</field>
             <field name="model">hotel.service</field>
@@ -332,7 +301,6 @@
             </field>
         </record>
 
-        <!-- Service Action -->
         <record model="ir.actions.act_window" id="hotel_service_action">
             <field name="name">Dịch vụ</field>
             <field name="res_model">hotel.service</field>
@@ -347,62 +315,23 @@
             </field>
         </record>
 
-        <!-- ============================================ -->
-        <!-- MENU STRUCTURE -->
-        <!-- ============================================ -->
-        
-        <!-- Root Menu -->
-        <menuitem name="Quản lý Khách sạn" 
-                  id="hotel_menu_root" 
-                  sequence="10"/>
+        <menuitem name="Quản lý Khách sạn" id="hotel_menu_root" sequence="10"/>
 
-        <!-- Menu 1: Lễ tân -->
-        <menuitem name="Lễ tân" 
-                  id="hotel_menu_reception" 
-                  parent="hotel_menu_root"
-                  sequence="10"/>
-        
-        <menuitem name="Đặt phòng" 
-                  id="hotel_menu_booking" 
-                  parent="hotel_menu_reception"
-                  action="hotel_booking_action"
-                  sequence="10"/>
-        
-        <menuitem name="Khách hàng" 
-                  id="hotel_menu_customer" 
-                  parent="hotel_menu_reception"
-                  action="hotel_customer_action"
-                  sequence="20"/>
+        <menuitem name="Lễ tân" id="hotel_menu_reception" parent="hotel_menu_root" sequence="10"/>
 
-        <!-- Menu 2: Quản lý Phòng -->
-        <menuitem name="Quản lý Phòng" 
-                  id="hotel_menu_room_management" 
-                  parent="hotel_menu_root"
-                  sequence="20"/>
-        
-        <menuitem name="Danh sách Phòng" 
-                  id="hotel_menu_room" 
-                  parent="hotel_menu_room_management"
-                  action="hotel_room_action"
-                  sequence="10"/>
+        <menuitem name="Đặt phòng" id="hotel_menu_booking" parent="hotel_menu_reception" action="hotel_booking_action" sequence="10"/>
 
-        <!-- Menu 3: Cấu hình -->
-        <menuitem name="Cấu hình" 
-                  id="hotel_menu_config" 
-                  parent="hotel_menu_root"
-                  sequence="30"/>
-        
-        <menuitem name="Loại phòng" 
-                  id="hotel_menu_room_type" 
-                  parent="hotel_menu_config"
-                  action="hotel_room_type_action"
-                  sequence="10"/>
-        
-        <menuitem name="Dịch vụ" 
-                  id="hotel_menu_service" 
-                  parent="hotel_menu_config"
-                  action="hotel_service_action"
-                  sequence="20"/>
+        <menuitem name="Khách hàng" id="hotel_menu_customer" parent="hotel_menu_reception" action="hotel_customer_action" sequence="20"/>
+
+        <menuitem name="Quản lý Phòng" id="hotel_menu_room_management" parent="hotel_menu_root" sequence="20"/>
+
+        <menuitem name="Danh sách Phòng" id="hotel_menu_room" parent="hotel_menu_room_management" action="hotel_room_action" sequence="10"/>
+
+        <menuitem name="Cấu hình" id="hotel_menu_config" parent="hotel_menu_root" sequence="30"/>
+
+        <menuitem name="Loại phòng" id="hotel_menu_room_type" parent="hotel_menu_config" action="hotel_room_type_action" sequence="10"/>
+
+        <menuitem name="Dịch vụ" id="hotel_menu_service" parent="hotel_menu_config" action="hotel_service_action" sequence="20"/>
     </data>
 </odoo>
 

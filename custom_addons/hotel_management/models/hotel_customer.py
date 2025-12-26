@@ -12,7 +12,6 @@ class HotelCustomer(models.Model):
     identity_card = fields.Char(string='Số CMND/CCCD', help='Số chứng minh nhân dân hoặc căn cước công dân')
     phone = fields.Char(string='Số điện thoại')
     
-    # Quan hệ ngược (tùy chọn - để xem lịch sử đặt phòng)
     booking_ids = fields.One2many('hotel.booking', 'customer_id', string='Lịch sử đặt phòng')
     
     _sql_constraints = [

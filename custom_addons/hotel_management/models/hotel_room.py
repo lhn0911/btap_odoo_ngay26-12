@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
 
@@ -22,10 +21,8 @@ class HotelRoom(models.Model):
         required=True
     )
     
-    # Quan hệ
     type_id = fields.Many2one('hotel.room.type', string='Loại phòng', required=True)
     
-    # Quan hệ ngược
     booking_ids = fields.One2many('hotel.booking', 'room_id', string='Lịch sử đặt phòng')
     
     _sql_constraints = [

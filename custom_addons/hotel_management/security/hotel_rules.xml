@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <!-- Record Rule: Lễ tân chỉ nhìn thấy Booking ở trạng thái draft hoặc confirmed -->
         <record id="hotel_booking_receptionist_rule" model="ir.rule">
             <field name="name">Hotel Booking: Receptionist chỉ thấy draft/confirmed</field>
             <field name="model_id" ref="model_hotel_booking"/>

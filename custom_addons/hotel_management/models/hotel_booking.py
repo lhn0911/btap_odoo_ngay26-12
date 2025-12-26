@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
@@ -27,7 +26,6 @@ class HotelBooking(models.Model):
         required=True
     )
     
-    # Quan hệ
     customer_id = fields.Many2one('hotel.customer', string='Khách hàng', required=True)
     room_id = fields.Many2one('hotel.room', string='Phòng', required=True)
     service_ids = fields.Many2many('hotel.service', string='Dịch vụ thêm')
@@ -47,10 +45,8 @@ class HotelBooking(models.Model):
         """Tính tổng thành tiền: (Giá phòng * Số đêm) + Tổng tiền dịch vụ"""
         for record in self:
             total = 0
-            # Tiền phòng
             if record.room_id and record.duration:
                 total += record.room_id.price_per_night * record.duration
-            # Tiền dịch vụ
             if record.service_ids:
                 total += sum(record.service_ids.mapped('price'))
             record.total_amount = total
