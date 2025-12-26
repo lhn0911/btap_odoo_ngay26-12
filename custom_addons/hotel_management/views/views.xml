@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- ============================================ -->
+        <!-- HOTEL BOOKING VIEWS -->
+        <!-- ============================================ -->
+        
+        <!-- Booking Tree View -->
+        <record model="ir.ui.view" id="hotel_booking_tree_view">
+            <field name="name">hotel.booking.tree</field>
+            <field name="model">hotel.booking</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách Đặt phòng" decoration-info="state == 'draft'" decoration-success="state == 'confirmed'" decoration-muted="state == 'done'">
+                    <field name="code"/>
+                    <field name="customer_id"/>
+                    <field name="room_id"/>
+                    <field name="check_in"/>
+                    <field name="check_out"/>
+                    <field name="total_amount"/>
+                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'confirmed'" decoration-muted="state == 'done'"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Booking Form View -->
+        <record model="ir.ui.view" id="hotel_booking_form_view">
+            <field name="name">hotel.booking.form</field>
+            <field name="model">hotel.booking</field>
+            <field name="arch" type="xml">
+                <form string="Phiếu Đặt phòng">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group string="Thông tin Booking">
+                                <field name="code" placeholder="Nhập mã booking..."/>
+                                <field name="customer_id" options="{'no_create': True}"/>
+                            </group>
+                            <group string="Thông tin Phòng">
+                                <field name="room_id" options="{'no_create': True}"/>
+                                <field name="check_in"/>
+                                <field name="check_out"/>
+                            </group>
+                        </group>
+                        
+                        <group>
+                            <group>
+                                <field name="duration" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="total_amount" readonly="1" class="oe_read_only" style="font-weight: bold; font-size: 16px;"/>
+                            </group>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Dịch vụ thêm" name="services">
+                                <field name="service_ids" widget="many2many_tags"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Booking Search View -->
+        <record model="ir.ui.view" id="hotel_booking_search_view">
+            <field name="name">hotel.booking.search</field>
+            <field name="model">hotel.booking</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm Đặt phòng">
+                    <field name="customer_id" string="Tên khách hàng"/>
+                    <field name="room_id" string="Số phòng"/>
+                    <filter string="Booking hôm nay" name="today" domain="[('check_in', '=', context_today())]"/>
+                    <separator/>
+                    <filter string="Nháp" name="draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Đã xác nhận" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                    <filter string="Hoàn thành" name="done" domain="[('state', '=', 'done')]"/>
+                    <group expand="0" string="Nhóm theo">
+                        <filter string="Phòng" name="group_room" context="{'group_by': 'room_id'}"/>
+                        <filter string="Trạng thái" name="group_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Booking Action -->
+        <record model="ir.actions.act_window" id="hotel_booking_action">
+            <field name="name">Đặt phòng</field>
+            <field name="res_model">hotel.booking</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="hotel_booking_search_view"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo phiếu đặt phòng đầu tiên!
+                </p>
+                <p>
+                    Quản lý tất cả các đặt phòng của khách sạn.
+                </p>
+            </field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- HOTEL CUSTOMER VIEWS -->
+        <!-- ============================================ -->
+        
+        <!-- Customer Tree View -->
+        <record model="ir.ui.view" id="hotel_customer_tree_view">
+            <field name="name">hotel.customer.tree</field>
+            <field name="model">hotel.customer</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách Khách hàng" default_order="name">
+                    <field name="name"/>
+                    <field name="identity_card"/>
+                    <field name="phone"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Customer Form View -->
+        <record model="ir.ui.view" id="hotel_customer_form_view">
+            <field name="name">hotel.customer.form</field>
+            <field name="model">hotel.customer</field>
+            <field name="arch" type="xml">
+                <form string="Khách hàng">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" placeholder="Nhập tên khách hàng..."/></h1>
+                        </div>
+                        <group string="Thông tin">
+                            <field name="identity_card" placeholder="Nhập số CMND/CCCD..."/>
+                            <field name="phone" placeholder="Nhập số điện thoại..."/>
+                        </group>
+                        
+                        <notebook>
+                            <page string="Lịch sử đặt phòng" name="bookings">
+                                <field name="booking_ids" readonly="1">
+                                    <tree>
+                                        <field name="code"/>
+                                        <field name="room_id"/>
+                                        <field name="check_in"/>
+                                        <field name="check_out"/>
+                                        <field name="total_amount"/>
+                                        <field name="state" widget="badge"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Customer Search View -->
+        <record model="ir.ui.view" id="hotel_customer_search_view">
+            <field name="name">hotel.customer.search</field>
+            <field name="model">hotel.customer</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm Khách hàng">
+                    <field name="name" string="Tên khách hàng"/>
+                    <field name="phone" string="Số điện thoại"/>
+                    <field name="identity_card" string="Số CMND/CCCD"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Customer Action -->
+        <record model="ir.actions.act_window" id="hotel_customer_action">
+            <field name="name">Khách hàng</field>
+            <field name="res_model">hotel.customer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="hotel_customer_search_view"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo khách hàng đầu tiên!
+                </p>
+                <p>
+                    Quản lý thông tin khách hàng của khách sạn.
+                </p>
+            </field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- HOTEL ROOM VIEWS -->
+        <!-- ============================================ -->
+        
+        <!-- Room Tree View -->
+        <record model="ir.ui.view" id="hotel_room_tree_view">
+            <field name="name">hotel.room.tree</field>
+            <field name="model">hotel.room</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách Phòng">
+                    <field name="name"/>
+                    <field name="type_id"/>
+                    <field name="floor"/>
+                    <field name="price_per_night"/>
+                    <field name="status" widget="badge" decoration-info="status == 'available'" decoration-warning="status == 'occupied'" decoration-muted="status == 'maintenance'"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Room Form View -->
+        <record model="ir.ui.view" id="hotel_room_form_view">
+            <field name="name">hotel.room.form</field>
+            <field name="model">hotel.room</field>
+            <field name="arch" type="xml">
+                <form string="Phòng Khách sạn">
+                    <sheet>
+                        <group>
+                            <group string="Thông tin Phòng">
+                                <field name="name" placeholder="VD: P101, P205..."/>
+                                <field name="type_id"/>
+                                <field name="floor"/>
+                            </group>
+                            <group string="Giá và Trạng thái">
+                                <field name="price_per_night"/>
+                                <field name="status"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Room Search View -->
+        <record model="ir.ui.view" id="hotel_room_search_view">
+            <field name="name">hotel.room.search</field>
+            <field name="model">hotel.room</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm Phòng">
+                    <field name="name"/>
+                    <field name="type_id"/>
+                    <filter string="Trống" name="available" domain="[('status', '=', 'available')]"/>
+                    <filter string="Đang ở" name="occupied" domain="[('status', '=', 'occupied')]"/>
+                    <filter string="Bảo trì" name="maintenance" domain="[('status', '=', 'maintenance')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Room Action -->
+        <record model="ir.actions.act_window" id="hotel_room_action">
+            <field name="name">Danh sách Phòng</field>
+            <field name="res_model">hotel.room</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="hotel_room_search_view"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo phòng đầu tiên!
+                </p>
+                <p>
+                    Quản lý tất cả các phòng của khách sạn.
+                </p>
+            </field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- HOTEL ROOM TYPE VIEWS -->
+        <!-- ============================================ -->
+        
+        <!-- Room Type Tree View -->
+        <record model="ir.ui.view" id="hotel_room_type_tree_view">
+            <field name="name">hotel.room.type.tree</field>
+            <field name="model">hotel.room.type</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách Loại phòng">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Room Type Form View -->
+        <record model="ir.ui.view" id="hotel_room_type_form_view">
+            <field name="name">hotel.room.type.form</field>
+            <field name="model">hotel.room.type</field>
+            <field name="arch" type="xml">
+                <form string="Loại Phòng">
+                    <sheet>
+                        <group>
+                            <field name="name" placeholder="VD: Single, Double, VIP..."/>
+                            <field name="code" placeholder="Mã loại phòng..."/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Room Type Action -->
+        <record model="ir.actions.act_window" id="hotel_room_type_action">
+            <field name="name">Loại phòng</field>
+            <field name="res_model">hotel.room.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo loại phòng đầu tiên!
+                </p>
+                <p>
+                    Quản lý các loại phòng của khách sạn.
+                </p>
+            </field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- HOTEL SERVICE VIEWS -->
+        <!-- ============================================ -->
+        
+        <!-- Service Tree View -->
+        <record model="ir.ui.view" id="hotel_service_tree_view">
+            <field name="name">hotel.service.tree</field>
+            <field name="model">hotel.service</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách Dịch vụ">
+                    <field name="name"/>
+                    <field name="price"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Service Form View -->
+        <record model="ir.ui.view" id="hotel_service_form_view">
+            <field name="name">hotel.service.form</field>
+            <field name="model">hotel.service</field>
+            <field name="arch" type="xml">
+                <form string="Dịch vụ">
+                    <sheet>
+                        <group>
+                            <field name="name" placeholder="VD: Ăn sáng, Spa, Giặt ủi..."/>
+                            <field name="price"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Service Action -->
+        <record model="ir.actions.act_window" id="hotel_service_action">
+            <field name="name">Dịch vụ</field>
+            <field name="res_model">hotel.service</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo dịch vụ đầu tiên!
+                </p>
+                <p>
+                    Quản lý các dịch vụ đi kèm của khách sạn.
+                </p>
+            </field>
+        </record>
+
+        <!-- ============================================ -->
+        <!-- MENU STRUCTURE -->
+        <!-- ============================================ -->
+        
+        <!-- Root Menu -->
+        <menuitem name="Quản lý Khách sạn" 
+                  id="hotel_menu_root" 
+                  sequence="10"/>
+
+        <!-- Menu 1: Lễ tân -->
+        <menuitem name="Lễ tân" 
+                  id="hotel_menu_reception" 
+                  parent="hotel_menu_root"
+                  sequence="10"/>
+        
+        <menuitem name="Đặt phòng" 
+                  id="hotel_menu_booking" 
+                  parent="hotel_menu_reception"
+                  action="hotel_booking_action"
+                  sequence="10"/>
+        
+        <menuitem name="Khách hàng" 
+                  id="hotel_menu_customer" 
+                  parent="hotel_menu_reception"
+                  action="hotel_customer_action"
+                  sequence="20"/>
+
+        <!-- Menu 2: Quản lý Phòng -->
+        <menuitem name="Quản lý Phòng" 
+                  id="hotel_menu_room_management" 
+                  parent="hotel_menu_root"
+                  sequence="20"/>
+        
+        <menuitem name="Danh sách Phòng" 
+                  id="hotel_menu_room" 
+                  parent="hotel_menu_room_management"
+                  action="hotel_room_action"
+                  sequence="10"/>
+
+        <!-- Menu 3: Cấu hình -->
+        <menuitem name="Cấu hình" 
+                  id="hotel_menu_config" 
+                  parent="hotel_menu_root"
+                  sequence="30"/>
+        
+        <menuitem name="Loại phòng" 
+                  id="hotel_menu_room_type" 
+                  parent="hotel_menu_config"
+                  action="hotel_room_type_action"
+                  sequence="10"/>
+        
+        <menuitem name="Dịch vụ" 
+                  id="hotel_menu_service" 
+                  parent="hotel_menu_config"
+                  action="hotel_service_action"
+                  sequence="20"/>
+    </data>
+</odoo>
+
